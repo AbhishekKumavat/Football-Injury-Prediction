@@ -62,8 +62,9 @@ xgb = XGBClassifier(
 xgb.fit(X_train_scaled, y_train)
 
 def train_and_save_model():
-    # Save model and scaler
+    # Save model, scaler and feature names
     joblib.dump(xgb, 'model.pkl')
     joblib.dump(scaler, 'scaler.pkl')
+    joblib.dump(list(X.columns), 'feature_names.pkl')
     
-    return xgb, scaler
+    return xgb, scaler, list(X.columns)
