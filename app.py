@@ -9,6 +9,7 @@ import requests
 from io import BytesIO
 import os
 import joblib
+from train_model import train_and_save_model  # Add this import
 
 # Get the directory of the current script
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -370,18 +371,21 @@ st.markdown(f"""
     </style>
     """, unsafe_allow_html=True)
 
-# Add near the top of app.py, after imports
 @st.cache_resource
-def load_model_and_scaler():
+def load_or_create_model():
     try:
+        # Try to load existing model
         model = joblib.load('model.pkl')
         scaler = joblib.load('scaler.pkl')
-    except:
-        model = pickle.load(open('model.pkl', 'rb'))
-        scaler = pickle.load(open('scaler.pkl', 'rb'))
+    except FileNotFoundError:
+        # If model doesn't exist, train a new one
+        st.warning("Training new model... This may take a few minutes.")
+        model, scaler = train_and_save_model()
+        
     return model, scaler
 
-model, scaler = load_model_and_scaler()
+# Replace your existing model loading code with this
+model, scaler = load_or_create_model()
 
 # Load model and data
 model = pickle.load(open('model.pkl', 'rb'))

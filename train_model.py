@@ -61,7 +61,9 @@ xgb = XGBClassifier(
 # Train model
 xgb.fit(X_train_scaled, y_train)
 
-# Save model and scaler
-joblib.dump(xgb, 'injury_predictor.pkl')
-joblib.dump(scaler, 'scaler.pkl')
-print("Model and scaler saved successfully!")
+def train_and_save_model():
+    # Save model and scaler
+    joblib.dump(xgb, 'model.pkl')
+    joblib.dump(scaler, 'scaler.pkl')
+    
+    return xgb, scaler
