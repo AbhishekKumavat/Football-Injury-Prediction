@@ -3,11 +3,12 @@ services:
     name: football-injury-predictor
     env: python
     buildCommand: |
+      pip install --upgrade pip
       pip install -r requirements.txt
       python train_model.py
     startCommand: streamlit run app.py
     envVars:
       - key: PYTHON_VERSION
-        value: 3.9.0
+        value: 3.9.18
       - key: PORT
         value: 8501 
