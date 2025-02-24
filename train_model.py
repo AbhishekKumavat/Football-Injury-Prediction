@@ -30,9 +30,15 @@ df['workload_intensity'] = df['minutes_90s'] / df['games'].clip(lower=1)
 X = df.drop(columns=["currently_injured"])
 y = df["currently_injured"]
 
-# More balanced SMOTE approach
-smote = SMOTE(random_state=42, sampling_strategy={0: len(df[df['currently_injured']==1]), 
-                                                 1: int(len(df[df['currently_injured']==1]) * 0.8)})
+# Calculate the number of samples in majority class
+n_majority = sum(y == 0)
+n_minority = sum(y == 1)
+
+# Set sampling_strategy to a safer ratio
+smote = SMOTE(
+    random_state=42,
+    sampling_strategy=min(0.5, n_minority/n_majority)  # Use 50% or less if minority class is very small
+)
 X, y = smote.fit_resample(X, y)
 
 # Train-test split with better stratification
