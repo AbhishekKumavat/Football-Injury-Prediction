@@ -15,7 +15,7 @@ print(f"Using port: {port}")
 import streamlit.web.cli as stcli 
  
 if __name__ == "__main__": 
-    test_app = str(current_dir / "test_app.py") 
-    print(f"Running: {test_app}") 
-    sys.argv = ["streamlit", "run", test_app, "--server.port", port, "--server.address", "0.0.0.0"] 
+    app_path = str(current_dir / "app.py") 
+    print(f"Running: {app_path}") 
+    sys.argv = ["streamlit", "run", app_path, "--server.port", port, "--server.address", "0.0.0.0"] 
     sys.exit(stcli.main()) 
