@@ -5,8 +5,10 @@ services:
     buildCommand: |
       pip install --upgrade pip
       pip install -r requirements.txt
-      python train_model.py
-    startCommand: streamlit run app.py
+    startCommand: |
+      mkdir -p ~/.streamlit
+      cp setup.sh ~/.streamlit/config.toml
+      streamlit run app.py
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.9
